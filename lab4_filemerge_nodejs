@@ -1,0 +1,34 @@
+const fs = require("fs");
+const path = require("path");
+
+// Define file paths
+const file1Path = path.join(__dirname, "file1.txt");
+const file2Path = path.join(__dirname, "file2.txt");
+const mergedFilePath = path.join(__dirname, "merged.txt");
+
+// Read file1
+fs.readFile(file1Path, "utf8", (err1, data1) => {
+  if (err1) {
+    console.error("❌ Error reading file1.txt:", err1);
+    return;
+  }
+
+  // Read file2
+  fs.readFile(file2Path, "utf8", (err2, data2) => {
+    if (err2) {
+      console.error("❌ Error reading file2.txt:", err2);
+      return;
+    }
+
+    // Merge contents and write to merged.txt
+    const mergedData = data1 + "\n" + data2;
+
+    fs.writeFile(mergedFilePath, mergedData, (err3) => {
+      if (err3) {
+        console.error("❌ Error writing to merged.txt:", err3);
+      } else {
+        console.log("✅ Files merged successfully into merged.txt");
+      }
+    });
+  });
+});
